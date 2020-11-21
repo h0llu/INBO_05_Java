@@ -18,8 +18,7 @@ public class ExpressionParser implements Parser {
 //
 //    multiplyDivide : factor ( ( '*' | '/' ) factor )* ;
 //
-//	  factor : CONST | UNARY_MINUS CONST | X | UNARY_MINUS X |
-//			   Y | UNARY_MINUS Y | Z | UNARY_MINUS Z | '(' expression ')' ;
+//    factor : CONST | UNARY_MINUS CONST | VARIABLE | UNARY_MINUS VARIABLE | '(' expression ')' ;
 
 	public TripleExpression parse(String expression) throws ParserException {
 		List<Lexeme> lexemes = Lexeme.lexAnalyze(expression);
@@ -163,6 +162,7 @@ public class ExpressionParser implements Parser {
 			return expression(lexemes);
 		}
 
+		// expression : addSubstract* END ;
 		private static TripleExpression expression(LexemeBuffer lexemes) throws ParserException {
 			Lexeme lexeme = lexemes.next();
 			if (lexeme.type == LexemeType.END) {
@@ -218,8 +218,7 @@ public class ExpressionParser implements Parser {
 			}
 		}
 
-		// factor : CONST | UNARY_MINUS CONST | X | UNARY_MINUS X |
-		// 			Y | UNARY_MINUS Y | Z | UNARY_MINUS Z | '(' expression ')' ;
+		// factor : CONST | UNARY_MINUS CONST | VARIABLE | UNARY_MINUS VARIABLE | '(' expression ')' ;
 		private static TripleExpression factor(LexemeBuffer lexemes) throws ParserException {
 			Lexeme lexeme = lexemes.next();
 			switch (lexeme.type) {
